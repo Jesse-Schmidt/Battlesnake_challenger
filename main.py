@@ -22,10 +22,10 @@ def info() -> typing.Dict:
 
     return {
         "apiversion": "1",
-        "author": "",  # TODO: Your Battlesnake Username
-        "color": "#888888",  # TODO: Choose color
-        "head": "default",  # TODO: Choose head
-        "tail": "default",  # TODO: Choose tail
+        "author": "Milikeye",  
+        "color": "#971B00",  
+        "head": "villain",  
+        "tail": "hook",  
     }
 
 
@@ -44,7 +44,12 @@ def end(game_state: typing.Dict):
 # See https://docs.battlesnake.com/api/example-move for available data
 def move(game_state: typing.Dict) -> typing.Dict:
 
-    is_move_safe = {"up": True, "down": True, "left": True, "right": True}
+    is_move_safe = {
+      "up": True, 
+      "down": True, 
+      "left": True, 
+      "right": True
+    }
 
     # We've included code to prevent your Battlesnake from moving backwards
     my_head = game_state["you"]["body"][0]  # Coordinates of your head
@@ -62,9 +67,8 @@ def move(game_state: typing.Dict) -> typing.Dict:
     elif my_neck["y"] > my_head["y"]:  # Neck is above head, don't move up
         is_move_safe["up"] = False
 
-    # TODO: Step 1 - Prevent your Battlesnake from moving out of bounds
-    # board_width = game_state['board']['width']
-    # board_height = game_state['board']['height']
+    board_width = game_state['board']['width']
+    board_height = game_state['board']['height']
 
     # TODO: Step 2 - Prevent your Battlesnake from colliding with itself
     # my_body = game_state['you']['body']
@@ -86,7 +90,7 @@ def move(game_state: typing.Dict) -> typing.Dict:
     next_move = random.choice(safe_moves)
 
     # TODO: Step 4 - Move towards food instead of random, to regain health and survive longer
-    # food = game_state['board']['food']
+    food = game_state['board']['food']
 
     print(f"MOVE {game_state['turn']}: {next_move}")
     return {"move": next_move}
@@ -96,4 +100,9 @@ def move(game_state: typing.Dict) -> typing.Dict:
 if __name__ == "__main__":
     from server import run_server
 
-    run_server({"info": info, "start": start, "move": move, "end": end})
+    run_server({
+        "info": info, 
+        "start": start, 
+         "move": move, 
+        "end": end
+    })
